@@ -19,9 +19,59 @@ namespace SistemaLocadoraCarros
             this.Locacoes = new List<Locacao>();
         }
 
+        private bool VerificarSeClientePessoaFisicaJaExiste(PessoaFisica pessoa)
+        {
+            List<PessoaFisica> pessoasFisica = new List<PessoaFisica>();
+            foreach (var c in  this.Clientes)
+            {
+                if (c is PessoaFisica)
+                {
+                    PessoaFisica p = (PessoaFisica) c;
+                    pessoasFisica.Add(p);
+                }
+            }
+
+            return pessoasFisica.Exists(p => pessoa.Cpf == p.Cpf);
+        }
+
+        private bool VerificarSeClientePessoaJuridicaJaExiste(PessoaJuridica empresa)
+        {
+            List<PessoaJuridica> pessoasJuridica = new List<PessoaJuridica>();
+            foreach (var c in this.Clientes)
+            {
+                if (c is PessoaJuridica)
+                {
+                    PessoaJuridica p = (PessoaJuridica) c;
+                    pessoasJuridica.Add(p);
+                }
+            }
+
+            return pessoasJuridica.Exists(p => empresa.Cnpj == p.Cnpj);
+        }
+
         public void CadastrarCliente(Pessoa cliente)
         {
+            if (cliente is PessoaFisica)
+            {
+                PessoaFisica p = (PessoaFisica) cliente;
+                if (VerificarSeClientePessoaFisicaJaExiste(p))
+                {
+                    Console.WriteLine("Este cliente já se encontra cadastrado no sistema!");
+                    return;
+                }                                  
+            }
+            else
+            {
+                PessoaJuridica e = (PessoaJuridica) cliente;
+                if (VerificarSeClientePessoaJuridicaJaExiste(e))
+                {
+                    Console.WriteLine("Está empresa já está cadastrada em nosso sistema!");
+                    return;
+                }                
+            }
+
             this.Clientes.Add(cliente);
+            Console.WriteLine("Cadastro realizado com sucesso!");
         }
 
         public void CadastrarVeiculo(Veiculo veiculo)
@@ -43,7 +93,7 @@ namespace SistemaLocadoraCarros
                 Console.WriteLine("======== CLIENTES ========");
                 foreach (var c in this.Clientes)
                 {
-                    c.ToString();
+                    Console.WriteLine(c.ToString());
                     Console.WriteLine();
                 }
             }

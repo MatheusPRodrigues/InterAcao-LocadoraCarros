@@ -8,6 +8,62 @@ void PressioneEnterParaContinuar()
     Console.ReadLine();
 }
 
+PessoaFisica CadastrarPessoaFisica()
+{
+    Console.WriteLine("Digite o seu nome:");
+    string nomeCliente = Console.ReadLine();
+
+    Console.WriteLine("Digite o seu CPF:");
+    string cpfCliente = Console.ReadLine();
+
+    Console.WriteLine("Digite a sua data de nascimento:");
+    DateOnly dataNascimento = DateOnly.Parse(Console.ReadLine() ?? "00/00/0000");
+
+    return new PessoaFisica(nomeCliente, dataNascimento, cpfCliente);
+}
+
+PessoaJuridica CadastrarPessoaJuridica()
+{
+    Console.WriteLine("Digite a razão social da organização:");
+    string razaoSocial = Console.ReadLine();
+
+    Console.WriteLine("Digite o CNPJ da organização:");
+    string cnpj = Console.ReadLine();
+
+    Console.WriteLine("Digite a data de fundação da organização");
+    DateOnly dataFundacao = DateOnly.Parse(Console.ReadLine() ?? "00/00/0000");
+
+    return new PessoaJuridica(razaoSocial, dataFundacao, cnpj);
+}
+
+void CadastrarCliente(Locadora locadora)
+{
+    string opcao;
+    bool respostaInvalida;
+    
+    Console.WriteLine("===== CADASTRAR CLIENTE =====");
+    do
+    {
+        Console.WriteLine("1 - Pessoa Física | 2 - Pessoa Jurídica");
+        Console.Write(": ");
+        opcao = Console.ReadLine() ?? "";
+
+        respostaInvalida =  opcao != "1" && opcao != "2";
+
+        if (respostaInvalida)
+            Console.WriteLine("\nOpção inválida! Tente novamente!");
+
+    }
+    while (respostaInvalida);
+
+    if (opcao == "1")
+        locadora.CadastrarCliente(CadastrarPessoaFisica());
+    else
+        locadora.CadastrarCliente(CadastrarPessoaJuridica());
+
+    PressioneEnterParaContinuar();
+}
+
 void ExibirClientes(Locadora locadora)
 {
     Console.Clear();
@@ -50,6 +106,7 @@ void MenuPrincipal()
         switch (opcao)
         {
             case "1":
+                CadastrarCliente(locadora);
                 break;
             case "2":
                 ExibirClientes(locadora);
