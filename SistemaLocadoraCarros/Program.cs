@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿// Sistema de Locadora de Carros
+
+using SistemaLocadoraCarros;
+
+Locadora locadora = new Locadora();
