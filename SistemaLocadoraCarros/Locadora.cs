@@ -77,6 +77,7 @@ namespace SistemaLocadoraCarros
         public void CadastrarVeiculo(Veiculo veiculo)
         {
             this.Veiculos.Add(veiculo);
+            Console.WriteLine("Veículo cadastrado com sucesso!");
         }
 
         public void RealizarLocacao(Pessoa cliente, Veiculo veiculo)
@@ -108,7 +109,7 @@ namespace SistemaLocadoraCarros
                 Console.WriteLine("======== VEÍCULOS ========");
                 foreach (var v in this.Veiculos)
                 {
-                    v.ExibirInformacoes();
+                    Console.WriteLine(v.ExibirInformacoes());
                     Console.WriteLine();
                 }
             }
@@ -123,7 +124,7 @@ namespace SistemaLocadoraCarros
                 Console.WriteLine("======== LOCAÇÕES ========");
                 foreach (var l in this.Locacoes)
                 {
-                    l.ToString();
+                    Console.WriteLine(l.ToString());
                     Console.WriteLine();
                 }
             }

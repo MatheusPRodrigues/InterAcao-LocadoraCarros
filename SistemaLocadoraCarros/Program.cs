@@ -64,6 +64,53 @@ void CadastrarCliente(Locadora locadora)
     PressioneEnterParaContinuar();
 }
 
+Carro CadastrarCarro()
+{
+    Console.WriteLine("Digite a marca do carro:");
+    string marca = Console.ReadLine();
+
+    Console.WriteLine("Digite a cor do carro:");
+    string cor = Console.ReadLine();
+
+    Console.WriteLine("Digite o ano de fabricação do carro:");
+    int ano = Convert.ToInt32(Console.ReadLine());
+
+    Console.WriteLine("Digite a quantidade de portas do carro:");
+    int qtdPortas = Convert.ToInt32(Console.ReadLine());
+
+    Console.WriteLine("Digite o valor de locação do carro: ");
+    double valorLocacao = Convert.ToDouble(Console.ReadLine());
+
+    return new Carro(marca, cor, ano, qtdPortas, valorLocacao);
+}
+
+void CadastrarVeiculo(Locadora locadora)
+{
+    string opcao;
+    bool respostaInvalida;
+
+    Console.WriteLine("===== CADASTRAR VEÍCULO =====");
+    do
+    {
+        Console.WriteLine("1 - Carro | 2 - Moto | 3 - Caminhão");
+        Console.Write(": ");
+        opcao = Console.ReadLine() ?? "";
+
+        respostaInvalida = opcao != "1" && opcao != "2" && opcao != "3";
+
+        if (respostaInvalida)
+            Console.WriteLine("\nOpção inválida! Tente novamente!");
+
+    }
+    while (respostaInvalida);
+
+    if (opcao == "1")
+        locadora.CadastrarVeiculo(CadastrarCarro());
+
+    
+    PressioneEnterParaContinuar();
+}
+
 void ExibirClientes(Locadora locadora)
 {
     Console.Clear();
@@ -112,6 +159,7 @@ void MenuPrincipal()
                 ExibirClientes(locadora);
                 break;
             case "3":
+                CadastrarVeiculo(locadora);
                 break;
             case "4":
                 ExibirVeiculos(locadora);
