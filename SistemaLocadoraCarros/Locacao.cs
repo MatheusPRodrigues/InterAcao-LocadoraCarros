@@ -14,9 +14,11 @@ namespace SistemaLocadoraCarros
         public Veiculo VeiculoLocado { get; set; }
         public double ValorLocacao { get; set; }
 
-        public Locacao(int id, Pessoa cliente, Veiculo veiculoLocado)
+        private int Contador = 0;
+
+        public Locacao(Pessoa cliente, Veiculo veiculoLocado)
         {
-            this.Id = id;
+            this.Id = this.Contador++;
             this.DataLocacao = DateTime.Now;
             this.Cliente = cliente;
             this.VeiculoLocado = veiculoLocado;
