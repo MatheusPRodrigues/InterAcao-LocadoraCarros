@@ -8,12 +8,17 @@ namespace SistemaLocadoraCarros
 {
     public class Caminhao : Veiculo
     {
-        public double QtdCarga { get; set; }
+        public double QtdCargaSuportada { get; set; }
         
-        public Caminhao(string marca, string cor, int ano, double qtdCarga, double valorVeiculo) :
-            base(marca, cor, ano, valorVeiculo)
+        public Caminhao(string placa, string marca, string cor, int ano, double qtdCargaSuportada, double valorVeiculo) :
+            base(placa, marca, cor, ano, valorVeiculo)
         {
-            this.QtdCarga = qtdCarga;
+            this.QtdCargaSuportada = qtdCargaSuportada;
+        }
+
+        public override string ExibirInformacoes()
+        {
+            return base.ExibirInformacoes() + $"Carga suportada: {this.QtdCargaSuportada:F2}\n";
         }
     }
 }

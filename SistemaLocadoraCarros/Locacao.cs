@@ -36,7 +36,14 @@ namespace SistemaLocadoraCarros
 
         public override string ToString()
         {
-            return "";
+            return $"Id da locação: {this.Id}\n" +
+                $"Data de locação: {this.DataLocacao}\n" +
+                $"===================================\n" +
+                $"{VeiculoLocado.ExibirInformacoes()}" +
+                $"===================================\n" +
+                $"{Cliente.ToString()}" +
+                $"===================================\n" +
+                $"Valor da locação: {this.ValorLocacao}\n";
         }
     }
 }

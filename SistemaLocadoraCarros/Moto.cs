@@ -10,10 +10,16 @@ namespace SistemaLocadoraCarros
     {
         public bool VemComBau { get; set; }
         
-        public Moto(string marca, string cor, int ano, double valorVeiculo, bool vemComBau) :
-            base(marca, cor, ano, valorVeiculo)
+        public Moto(string placa, string marca, string cor, int ano, double valorVeiculo, bool vemComBau) :
+            base(placa, marca, cor, ano, valorVeiculo)
         {
             this.VemComBau = vemComBau;
+        }
+
+        public override string ExibirInformacoes()
+        {
+            string motoPossuiBau = this.VemComBau ? "A moto vem com baú!" : "A moto não possuí baú!";
+            return base.ExibirInformacoes() + $"{motoPossuiBau}\n";
         }
     }
 }

@@ -8,17 +8,28 @@ namespace SistemaLocadoraCarros
 {
     public abstract class Veiculo
     {
+        public string Placa { get; set; }
         public string Marca { get; set; }
         public string Cor { get; set; }
         public int Ano { get; set; }
         public double ValorVeiculo { get; set; }
 
-        public Veiculo(string marca, string cor, int ano, double valorVeiculo)
+        public Veiculo(string placa, string marca, string cor, int ano, double valorVeiculo)
         {
+            this.Placa = placa;
             this.Marca = marca;
             this.Cor = cor;
             this.Ano = ano;
             this.ValorVeiculo = valorVeiculo;
+        }
+
+        public virtual string ExibirInformacoes()
+        {
+            return $"Placa: {this.Placa}\n" +
+                $"Marca: {this.Marca}\n" +
+                $"Cor: {this.Cor}\n" +
+                $"Ano: {this.Ano}\n" +
+                $"Preço: {this.ValorVeiculo:C}\n";
         }
     }
 }
