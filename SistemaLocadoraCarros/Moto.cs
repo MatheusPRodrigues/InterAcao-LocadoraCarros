@@ -10,8 +10,8 @@ namespace SistemaLocadoraCarros
     {
         public bool VemComBau { get; set; }
         
-        public Moto(string placa, string marca, string cor, int ano, double valorVeiculo, bool vemComBau) :
-            base(placa, marca, cor, ano, valorVeiculo)
+        public Moto(string marca, string cor, int ano, double valorVeiculo, bool vemComBau) :
+            base(marca, cor, ano, valorVeiculo)
         {
             this.VemComBau = vemComBau;
         }

@@ -10,8 +10,8 @@ namespace SistemaLocadoraCarros
     {
         public int QtdPortas { get; set; }
         
-        public Carro(string placa, string marca, string cor, int ano, int qtdPortas, double valorVeiculo) :
-            base(placa, marca, cor, ano, valorVeiculo)
+        public Carro(string marca, string cor, int ano, int qtdPortas, double valorVeiculo) :
+            base(marca, cor, ano, valorVeiculo)
         {
             this.QtdPortas = qtdPortas;
         }
