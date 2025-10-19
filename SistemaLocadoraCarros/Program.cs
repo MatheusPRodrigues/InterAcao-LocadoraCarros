@@ -8,13 +8,78 @@ void PressioneEnterParaContinuar()
     Console.ReadLine();
 }
 
+bool VerificarSeTemCaractereDiferenteDeNumero(string texto)
+{
+    return !(long.TryParse(texto, out var numeros));
+}
+
+string InserirCpfValido()
+{
+    bool cpfInvalido;
+    string cpf;
+    do
+    {
+        Console.WriteLine("Digite o CPF do cliente (somente os números):");
+        cpf = Console.ReadLine();
+
+        cpfInvalido = cpf.Length != 11 || VerificarSeTemCaractereDiferenteDeNumero(cpf);
+
+        if (cpfInvalido)
+            Console.WriteLine("CPF inválido! Tente novamente!");
+
+    } while (cpfInvalido);
+
+    return cpf;
+}
+
+string InserirCnpjValido()
+{
+    bool cnpjInvalido;
+    string cnpj;
+    do
+    {
+        Console.WriteLine("Digite o CNPJ do cliente (somente os números):");
+        cnpj = Console.ReadLine();
+
+        cnpjInvalido = cnpj.Length != 14 || VerificarSeTemCaractereDiferenteDeNumero(cnpj);
+
+        if (cnpjInvalido)
+            Console.WriteLine("CPF inválido! Tente novamente!");
+
+    } while (cnpjInvalido);
+
+    return cnpj;
+}
+
+string SelecionarTipoDePessoa(string mensagem)
+{
+    string opcao;
+    bool respostaInvalida;
+
+    Console.WriteLine(mensagem);
+    do
+    {
+        Console.WriteLine("1 - Pessoa Física | 2 - Pessoa Jurídica");
+        Console.Write(": ");
+        opcao = Console.ReadLine() ?? "";
+
+        respostaInvalida = opcao != "1" && opcao != "2";
+
+        if (respostaInvalida)
+            Console.WriteLine("\nOpção inválida! Tente novamente!");
+
+    }
+    while (respostaInvalida);
+
+    return opcao;
+}
+
 PessoaFisica CadastrarPessoaFisica()
 {
     Console.WriteLine("Digite o seu nome:");
     string nomeCliente = Console.ReadLine();
 
-    Console.WriteLine("Digite o seu CPF:");
-    string cpfCliente = Console.ReadLine();
+    string cpfCliente = InserirCpfValido();
 
     Console.WriteLine("Digite a sua data de nascimento:");
     DateOnly dataNascimento = DateOnly.Parse(Console.ReadLine() ?? "00/00/0000");
@@ -27,8 +92,7 @@ PessoaJuridica CadastrarPessoaJuridica()
     Console.WriteLine("Digite a razão social da organização:");
     string razaoSocial = Console.ReadLine();
 
-    Console.WriteLine("Digite o CNPJ da organização:");
-    string cnpj = Console.ReadLine();
+    string cnpj = InserirCnpjValido();
 
     Console.WriteLine("Digite a data de fundação da organização");
     DateOnly dataFundacao = DateOnly.Parse(Console.ReadLine() ?? "00/00/0000");
@@ -38,23 +102,7 @@ PessoaJuridica CadastrarPessoaJuridica()
 
 void CadastrarCliente(Locadora locadora)
 {
-    string opcao;
-    bool respostaInvalida;
-    
-    Console.WriteLine("===== CADASTRAR CLIENTE =====");
-    do
-    {
-        Console.WriteLine("1 - Pessoa Física | 2 - Pessoa Jurídica");
-        Console.Write(": ");
-        opcao = Console.ReadLine() ?? "";
-
-        respostaInvalida =  opcao != "1" && opcao != "2";
-
-        if (respostaInvalida)
-            Console.WriteLine("\nOpção inválida! Tente novamente!");
-
-    }
-    while (respostaInvalida);
+    string opcao = SelecionarTipoDePessoa("===== CADASTRAR CLIENTE =====");
 
     if (opcao == "1")
         locadora.CadastrarCliente(CadastrarPessoaFisica());
@@ -183,8 +231,7 @@ PessoaFisica BuscarClientePessoaFisica(Locadora locadora)
         Console.WriteLine(p.ToString());
     }
 
-    Console.WriteLine("Digite o CPF do cliente para cadastra-lo na locação:");
-    string cpf = Console.ReadLine();
+    string cpf = InserirCpfValido();
 
     PessoaFisica pessoaFisica = pessoas.FirstOrDefault(p => p.Cpf == cpf)!;
 
@@ -199,8 +246,7 @@ PessoaJuridica BuscarClientePessoaJuridica(Locadora locadora)
         Console.WriteLine(e.ToString());
     }
 
-    Console.WriteLine("Digite o CNPJ da empresa para cadastra-la na locação:");
-    string cnpj = Console.ReadLine();
+    string cnpj = InserirCnpjValido();
 
     PessoaJuridica empresa = empresas.FirstOrDefault(e => e.Cnpj == cnpj)!;
 
@@ -219,32 +265,27 @@ Veiculo SelecionarVeiculoParaLocacao(Locadora locadora)
 
 void RealizarLocacao(Locadora locadora)
 {
-    string opcao;
-    bool respostaInvalida;
-
-    Console.WriteLine("Qual tipo de cliente deseja realizar a locação?");
-    do
-    {
-        Console.WriteLine("1 - Pessoa Física | 2 - Pessoa Jurídica");
-        Console.Write(": ");
-        opcao = Console.ReadLine() ?? "";
-
-        respostaInvalida = opcao != "1" && opcao != "2";
-
-        if (respostaInvalida)
-            Console.WriteLine("\nOpção inválida! Tente novamente!");
-
-    }
-    while (respostaInvalida);
-
+    string opcao = SelecionarTipoDePessoa("Qual tipo de cliente deseja realizar a locação?");
     Pessoa cliente;
 
     if (opcao == "1")
         cliente = BuscarClientePessoaFisica(locadora);
-    else 
+    else
         cliente = BuscarClientePessoaJuridica(locadora);
 
+    if (cliente == null)
+    {
+        Console.WriteLine("Cliente não encontrado! Tente novamente!");
+        return;
+    }
+
     Veiculo veiculo = SelecionarVeiculoParaLocacao(locadora);
+
+    if (veiculo == null)
+    {
+        Console.WriteLine("Veículo não encontrado! Tente novamente!");
+        return;
+    }
 
     locadora.RealizarLocacao(cliente, veiculo);
 }

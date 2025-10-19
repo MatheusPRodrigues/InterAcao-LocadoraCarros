@@ -19,21 +19,6 @@ namespace SistemaLocadoraCarros
             this.Locacoes = new List<Locacao>();
         }
 
-        private bool VerificarSeClientePessoaFisicaJaExiste(PessoaFisica pessoa)
-        {
-            List<PessoaFisica> pessoasFisica = new List<PessoaFisica>();
-            foreach (var c in  this.Clientes)
-            {
-                if (c is PessoaFisica)
-                {
-                    PessoaFisica p = (PessoaFisica) c;
-                    pessoasFisica.Add(p);
-                }
-            }
-
-            return pessoasFisica.Exists(p => pessoa.Cpf == p.Cpf);
-        }
-
         public List<PessoaFisica> SelecionarApenasPessoaFisica()
         {
             List<PessoaFisica> pessoasFisica = new List<PessoaFisica>();
@@ -49,19 +34,11 @@ namespace SistemaLocadoraCarros
             return pessoasFisica;
         }
 
-        private bool VerificarSeClientePessoaJuridicaJaExiste(PessoaJuridica empresa)
+        private bool VerificarSeClientePessoaFisicaJaExiste(PessoaFisica pessoa)
         {
-            List<PessoaJuridica> pessoasJuridica = new List<PessoaJuridica>();
-            foreach (var c in this.Clientes)
-            {
-                if (c is PessoaJuridica)
-                {
-                    PessoaJuridica p = (PessoaJuridica) c;
-                    pessoasJuridica.Add(p);
-                }
-            }
+            List<PessoaFisica> pessoasFisica = SelecionarApenasPessoaFisica();
 
-            return pessoasJuridica.Exists(p => empresa.Cnpj == p.Cnpj);
+            return pessoasFisica.Exists(p => pessoa.Cpf == p.Cpf);
         }
 
         public List<PessoaJuridica> SelecionarApenasPessoaJuridica()
@@ -77,6 +54,13 @@ namespace SistemaLocadoraCarros
             }
 
             return pessoasJuridica;
+        }
+
+        private bool VerificarSeClientePessoaJuridicaJaExiste(PessoaJuridica empresa)
+        {
+            List<PessoaJuridica> pessoasJuridica = SelecionarApenasPessoaJuridica();
+
+            return pessoasJuridica.Exists(p => empresa.Cnpj == p.Cnpj);
         }
 
         public void CadastrarCliente(Pessoa cliente)
