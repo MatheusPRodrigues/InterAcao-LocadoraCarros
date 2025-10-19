@@ -84,6 +84,67 @@ Carro CadastrarCarro()
     return new Carro(marca, cor, ano, qtdPortas, valorLocacao);
 }
 
+bool MotoPossuiBau()
+{
+    string opcao;
+    bool respostaInvalida;
+    Console.WriteLine("A moto possuí baú?");
+    do
+    {
+        Console.Write("(1 - Sim | 0 - Não): ");
+        opcao = Console.ReadLine(); 
+
+        respostaInvalida = opcao != "1" && opcao != "0";
+        if (respostaInvalida)
+            Console.WriteLine("Resposta inválida! Escolha '1' ou '0'\n");
+    }
+    while (respostaInvalida);
+
+    if (opcao == "1")
+        return true;
+    else
+        return false;
+}
+
+Moto CadastrarMoto()
+{
+    Console.WriteLine("Digite a marca da moto:");
+    string marca = Console.ReadLine();
+
+    Console.WriteLine("Digite a cor da moto:");
+    string cor = Console.ReadLine();
+
+    Console.WriteLine("Digite o ano de fabricação da moto:");
+    int ano = Convert.ToInt32(Console.ReadLine());
+
+    bool bau = MotoPossuiBau();
+
+    Console.WriteLine("Digite o valor de locação da moto: ");
+    double valorLocacao = Convert.ToDouble(Console.ReadLine());
+
+    return new Moto(marca, cor, ano, valorLocacao, bau);
+}
+
+Caminhao CadastrarCaminhao()
+{
+    Console.WriteLine("Digite a marca do caminhão:");
+    string marca = Console.ReadLine();
+
+    Console.WriteLine("Digite a cor do caminhão:");
+    string cor = Console.ReadLine();
+
+    Console.WriteLine("Digite o ano de fabricação do caminhão:");
+    int ano = Convert.ToInt32(Console.ReadLine());
+
+    Console.WriteLine("Digite a quantidade de carga suportada pelo caminhão (em Kg):");
+    double qtdCarga = Convert.ToDouble(Console.ReadLine());
+
+    Console.WriteLine("Digite o valor de locação do caminhão: ");
+    double valorLocacao = Convert.ToDouble(Console.ReadLine());
+
+    return new Caminhao(marca, cor, ano, qtdCarga, valorLocacao);
+}
+
 void CadastrarVeiculo(Locadora locadora)
 {
     string opcao;
@@ -106,8 +167,11 @@ void CadastrarVeiculo(Locadora locadora)
 
     if (opcao == "1")
         locadora.CadastrarVeiculo(CadastrarCarro());
+    else if (opcao == "2")
+        locadora.CadastrarVeiculo(CadastrarMoto());
+    else
+        locadora.CadastrarVeiculo(CadastrarCaminhao());
 
-    
     PressioneEnterParaContinuar();
 }
 
@@ -165,6 +229,7 @@ void MenuPrincipal()
                 ExibirVeiculos(locadora);
                 break;
             case "5":
+                //TODO: Realizar locação
                 break;
             case "6":
                 ExibirLocacoes(locadora);
