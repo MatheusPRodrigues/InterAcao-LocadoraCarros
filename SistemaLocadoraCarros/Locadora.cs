@@ -34,6 +34,21 @@ namespace SistemaLocadoraCarros
             return pessoasFisica.Exists(p => pessoa.Cpf == p.Cpf);
         }
 
+        public List<PessoaFisica> SelecionarApenasPessoaFisica()
+        {
+            List<PessoaFisica> pessoasFisica = new List<PessoaFisica>();
+            foreach (var c in this.Clientes)
+            {
+                if (c is PessoaFisica)
+                {
+                    PessoaFisica p = (PessoaFisica)c;
+                    pessoasFisica.Add(p);
+                }
+            }
+
+            return pessoasFisica;
+        }
+
         private bool VerificarSeClientePessoaJuridicaJaExiste(PessoaJuridica empresa)
         {
             List<PessoaJuridica> pessoasJuridica = new List<PessoaJuridica>();
@@ -47,6 +62,21 @@ namespace SistemaLocadoraCarros
             }
 
             return pessoasJuridica.Exists(p => empresa.Cnpj == p.Cnpj);
+        }
+
+        public List<PessoaJuridica> SelecionarApenasPessoaJuridica()
+        {
+            List<PessoaJuridica> pessoasJuridica = new List<PessoaJuridica>();
+            foreach (var c in this.Clientes)
+            {
+                if (c is PessoaJuridica)
+                {
+                    PessoaJuridica p = (PessoaJuridica)c;
+                    pessoasJuridica.Add(p);
+                }
+            }
+
+            return pessoasJuridica;
         }
 
         public void CadastrarCliente(Pessoa cliente)
@@ -115,6 +145,11 @@ namespace SistemaLocadoraCarros
             }
             else
                 Console.WriteLine("Não há veículos cadastrados no sistema!");
+        }
+
+        public Veiculo SelecionarApenasUmVeiculo(string marca)
+        {
+            return this.Veiculos.FirstOrDefault(v => v.Marca == marca)!;
         }
 
         public void ExibirLocacoes()

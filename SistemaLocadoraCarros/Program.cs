@@ -175,6 +175,80 @@ void CadastrarVeiculo(Locadora locadora)
     PressioneEnterParaContinuar();
 }
 
+PessoaFisica BuscarClientePessoaFisica(Locadora locadora)
+{
+    List<PessoaFisica> pessoas = locadora.SelecionarApenasPessoaFisica();
+    foreach (var p in pessoas)
+    {
+        Console.WriteLine(p.ToString());
+    }
+
+    Console.WriteLine("Digite o CPF do cliente para cadastra-lo na locação:");
+    string cpf = Console.ReadLine();
+
+    PessoaFisica pessoaFisica = pessoas.FirstOrDefault(p => p.Cpf == cpf)!;
+
+    return pessoaFisica;
+}
+
+PessoaJuridica BuscarClientePessoaJuridica(Locadora locadora)
+{
+    List<PessoaJuridica> empresas = locadora.SelecionarApenasPessoaJuridica();
+    foreach (var e in empresas)
+    {
+        Console.WriteLine(e.ToString());
+    }
+
+    Console.WriteLine("Digite o CNPJ da empresa para cadastra-la na locação:");
+    string cnpj = Console.ReadLine();
+
+    PessoaJuridica empresa = empresas.FirstOrDefault(e => e.Cnpj == cnpj)!;
+
+    return empresa;
+}
+
+Veiculo SelecionarVeiculoParaLocacao(Locadora locadora)
+{
+    ExibirVeiculos(locadora);
+
+    Console.WriteLine("Digite a marca do veículo para realizar a locação:");
+    string marca = Console.ReadLine();
+
+    return locadora.SelecionarApenasUmVeiculo(marca);
+}
+
+void RealizarLocacao(Locadora locadora)
+{
+    string opcao;
+    bool respostaInvalida;
+
+    Console.WriteLine("Qual tipo de cliente deseja realizar a locação?");
+    do
+    {
+        Console.WriteLine("1 - Pessoa Física | 2 - Pessoa Jurídica");
+        Console.Write(": ");
+        opcao = Console.ReadLine() ?? "";
+
+        respostaInvalida = opcao != "1" && opcao != "2";
+
+        if (respostaInvalida)
+            Console.WriteLine("\nOpção inválida! Tente novamente!");
+
+    }
+    while (respostaInvalida);
+
+    Pessoa cliente;
+
+    if (opcao == "1")
+        cliente = BuscarClientePessoaFisica(locadora);
+    else 
+        cliente = BuscarClientePessoaJuridica(locadora);
+
+    Veiculo veiculo = SelecionarVeiculoParaLocacao(locadora);
+
+    locadora.RealizarLocacao(cliente, veiculo);
+}
+
 void ExibirClientes(Locadora locadora)
 {
     Console.Clear();
@@ -230,6 +304,7 @@ void MenuPrincipal()
                 break;
             case "5":
                 //TODO: Realizar locação
+                RealizarLocacao(locadora);
                 break;
             case "6":
                 ExibirLocacoes(locadora);
