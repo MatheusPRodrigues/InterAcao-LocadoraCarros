@@ -102,6 +102,8 @@ PessoaJuridica CadastrarPessoaJuridica()
 
 void CadastrarCliente(Locadora locadora)
 {
+    Console.Clear();
+
     string opcao = SelecionarTipoDePessoa("===== CADASTRAR CLIENTE =====");
 
     if (opcao == "1")
@@ -195,6 +197,8 @@ Caminhao CadastrarCaminhao()
 
 void CadastrarVeiculo(Locadora locadora)
 {
+    Console.Clear();
+
     string opcao;
     bool respostaInvalida;
 
@@ -265,6 +269,8 @@ Veiculo SelecionarVeiculoParaLocacao(Locadora locadora)
 
 void RealizarLocacao(Locadora locadora)
 {
+    Console.Clear();
+
     Console.WriteLine("TAXA DE 10% NA DIÁRIA PARA PESSOA FÍSICA");
     Console.WriteLine("TAXA DE 15% NA DIÁRIA PARA PESSOA JURÍDICA");
     Console.WriteLine();
@@ -323,7 +329,9 @@ void ExibirLocacoes(Locadora locadora)
 
 void BuscarLocacaoPorId(Locadora locadora)
 {
-    Console.Write("Digite o Id da locação que deseja consultar:");
+    Console.Clear();
+
+    Console.Write("Digite o Id da locação que deseja consultar: ");
     int id = int.Parse(Console.ReadLine());
     
     Console.WriteLine();
@@ -336,7 +344,34 @@ void BuscarLocacaoPorId(Locadora locadora)
     }
     else
     {
-        Console.WriteLine($"Não foi possível encontrar uma locação com o Id: {id}!");
+        Console.WriteLine($"Não foi encontrado locação com o Id: {id}!");
+    }
+
+    PressioneEnterParaContinuar();
+}
+
+void BuscarLocacoesPorCliente(Locadora locadora)
+{
+    Console.Clear();
+
+
+    Console.Write("Digite o nome/razão social do cliente: ");
+    string nome = Console.ReadLine();
+
+    Console.WriteLine();
+
+    List<Locacao> locacoes = locadora.BuscarLocacoesPorCliente(nome);
+
+    if (locacoes.Count > 0)
+    {
+        foreach (var locacao in locacoes)
+        {
+            Console.WriteLine(locacao.ToString());
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Não foi encontrado locações de {nome}!");
     }
 
     PressioneEnterParaContinuar();
@@ -347,6 +382,7 @@ void MenuPrincipal()
     Locadora locadora = new Locadora();
 
     bool repetir = true;
+    string opcao;
     do
     {
         Console.Clear();
@@ -358,8 +394,9 @@ void MenuPrincipal()
         Console.WriteLine("5 - Realizar locação de um veículo");
         Console.WriteLine("6 - Exibir locações");
         Console.WriteLine("7 - Exibir uma locação por id");
+        Console.WriteLine("8 - Exibir locações por cliente");
         Console.WriteLine("0 - Sair do sistema");
-        string opcao = Console.ReadLine();
+        opcao = Console.ReadLine();
 
         switch (opcao)
         {
@@ -383,6 +420,9 @@ void MenuPrincipal()
                 break;
             case "7":
                 BuscarLocacaoPorId(locadora);
+                break;
+            case "8":
+                BuscarLocacoesPorCliente(locadora);
                 break;
             case "0":
                 Console.Clear();

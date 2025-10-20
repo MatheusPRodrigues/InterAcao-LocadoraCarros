@@ -158,5 +158,10 @@ namespace SistemaLocadoraCarros
         {
             return this.Locacoes.FirstOrDefault(l => l.Id == id);
         }
+
+        public List<Locacao> BuscarLocacoesPorCliente(string nome)
+        {
+            return this.Locacoes.FindAll(l => l.Cliente.Nome == nome);
+        }
     }
 }
