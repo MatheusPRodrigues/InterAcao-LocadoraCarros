@@ -180,6 +180,39 @@ void CustomerMenu(int option)
     }
 }
 
+void CreateVehicle()
+{
+    throw new NotImplementedException();
+}
+
+void ListVehicles()
+{
+    throw new NotImplementedException();
+}
+
+void DeleteVehicle()
+{
+    throw new NotImplementedException();
+}
+
+void VehicleMenu(int option)
+{
+    switch (option)
+    {
+        case 1:
+            CreateVehicle();
+            break;
+        case 2:
+            ListVehicles();
+            break;
+        case 3:
+            //TODO: Alguma atualização
+            break;
+        case 4:
+            DeleteVehicle();
+            break;
+    }
+}
 
 do
 {
@@ -193,6 +226,7 @@ do
             break;
         case 2:
             int vehicleChoice = Menu.Display("====== Menu Veículos ======", vehiclesOptions);
+            VehicleMenu(vehicleChoice);
             break;
         case 3:
             int rentalChoice = Menu.Display("====== Menu Locações ======", rentalsOptions);
