@@ -44,7 +44,7 @@ string InserirCnpjValido()
         cnpjInvalido = cnpj.Length != 14 || VerificarSeTemCaractereDiferenteDeNumero(cnpj);
 
         if (cnpjInvalido)
-            Console.WriteLine("CPF inválido! Tente novamente!");
+            Console.WriteLine("CNPJ inválido! Tente novamente!");
 
     } while (cnpjInvalido);
 
