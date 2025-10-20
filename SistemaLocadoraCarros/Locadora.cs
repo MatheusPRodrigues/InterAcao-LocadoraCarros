@@ -153,5 +153,10 @@ namespace SistemaLocadoraCarros
             else
                 Console.WriteLine("Não há locações realizadas ainda no sistema!");
         }
+
+        public Locacao BuscarLocacaoPorId(int id)
+        {
+            return this.Locacoes.FirstOrDefault(l => l.Id == id);
+        }
     }
 }

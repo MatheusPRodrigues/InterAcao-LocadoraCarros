@@ -321,6 +321,27 @@ void ExibirLocacoes(Locadora locadora)
     PressioneEnterParaContinuar();
 }
 
+void BuscarLocacaoPorId(Locadora locadora)
+{
+    Console.Write("Digite o Id da locação que deseja consultar:");
+    int id = int.Parse(Console.ReadLine());
+    
+    Console.WriteLine();
+
+    Locacao locacao = locadora.BuscarLocacaoPorId(id);
+
+    if (locacao != null)
+    {
+        Console.WriteLine(locacao.ToString());
+    }
+    else
+    {
+        Console.WriteLine($"Não foi possível encontrar uma locação com o Id: {id}!");
+    }
+
+    PressioneEnterParaContinuar();
+}
+
 void MenuPrincipal()
 {
     Locadora locadora = new Locadora();
@@ -336,6 +357,7 @@ void MenuPrincipal()
         Console.WriteLine("4 - Exibir veículos");
         Console.WriteLine("5 - Realizar locação de um veículo");
         Console.WriteLine("6 - Exibir locações");
+        Console.WriteLine("7 - Exibir uma locação por id");
         Console.WriteLine("0 - Sair do sistema");
         string opcao = Console.ReadLine();
 
@@ -358,6 +380,9 @@ void MenuPrincipal()
                 break;
             case "6":
                 ExibirLocacoes(locadora);
+                break;
+            case "7":
+                BuscarLocacaoPorId(locadora);
                 break;
             case "0":
                 Console.Clear();
