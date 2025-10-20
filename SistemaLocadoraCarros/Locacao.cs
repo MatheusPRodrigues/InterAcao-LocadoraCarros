@@ -55,7 +55,7 @@ namespace SistemaLocadoraCarros
                 $"{VeiculoLocado.ExibirInformacoes()}" +
                 $"================ CLIENTE ================\n" +
                 $"{Cliente.ToString()}" +
-                $"============== VALOR LOCACÃO ==============\n" +
+                $"============== VALOR LOCACÃO ===============\n" +
                 $"Valor da locação (total): {this.ValorLocacao:C}\n";
         }
     }

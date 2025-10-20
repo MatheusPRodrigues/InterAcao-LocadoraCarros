@@ -142,7 +142,8 @@ namespace SistemaLocadoraCarros
         {
             if (this.Locacoes.Count > 0)
             {
-                Console.WriteLine("======== LOCAÇÕES ========");
+                Console.WriteLine("================ LOCAÇÕES ================");
+                Console.WriteLine();
                 foreach (var l in this.Locacoes)
                 {
                     Console.WriteLine(l.ToString());

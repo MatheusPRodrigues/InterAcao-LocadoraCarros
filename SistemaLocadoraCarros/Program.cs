@@ -265,6 +265,10 @@ Veiculo SelecionarVeiculoParaLocacao(Locadora locadora)
 
 void RealizarLocacao(Locadora locadora)
 {
+    Console.WriteLine("TAXA DE 10% NA DIÁRIA PARA PESSOA FÍSICA");
+    Console.WriteLine("TAXA DE 15% NA DIÁRIA PARA PESSOA JURÍDICA");
+    Console.WriteLine();
+
     string opcao = SelecionarTipoDePessoa("Qual tipo de cliente deseja realizar a locação?");
     Pessoa cliente;
 
@@ -350,7 +354,6 @@ void MenuPrincipal()
                 ExibirVeiculos(locadora);
                 break;
             case "5":
-                //TODO: Realizar locação
                 RealizarLocacao(locadora);
                 break;
             case "6":
