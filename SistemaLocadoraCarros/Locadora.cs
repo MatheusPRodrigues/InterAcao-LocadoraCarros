@@ -99,6 +99,7 @@ namespace SistemaLocadoraCarros
             this.Locacoes.Add(new Locacao(
                 cliente,
                 veiculo));
+            Console.WriteLine("\nLocação realizada com sucesso!");
         }
 
         public void ExibirClientes()

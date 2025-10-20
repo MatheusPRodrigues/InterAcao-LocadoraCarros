@@ -276,6 +276,7 @@ void RealizarLocacao(Locadora locadora)
     if (cliente == null)
     {
         Console.WriteLine("Cliente não encontrado! Tente novamente!");
+        PressioneEnterParaContinuar();
         return;
     }
 
@@ -284,10 +285,12 @@ void RealizarLocacao(Locadora locadora)
     if (veiculo == null)
     {
         Console.WriteLine("Veículo não encontrado! Tente novamente!");
+        PressioneEnterParaContinuar();
         return;
     }
 
     locadora.RealizarLocacao(cliente, veiculo);
+    PressioneEnterParaContinuar();
 }
 
 void ExibirClientes(Locadora locadora)
