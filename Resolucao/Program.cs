@@ -108,7 +108,6 @@ void ListCustomers()
         foreach (var c in rentalCompany.Customers)
         {
             Console.WriteLine(c); // Ele já exibe o ToString()
-            //Console.WriteLine(c.ToString());
             Console.WriteLine();
         }
     }
