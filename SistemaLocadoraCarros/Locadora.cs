@@ -94,11 +94,12 @@ namespace SistemaLocadoraCarros
             Console.WriteLine("Veículo cadastrado com sucesso!");
         }
 
-        public void RealizarLocacao(Pessoa cliente, Veiculo veiculo)
+        public void RealizarLocacao(Pessoa cliente, Veiculo veiculo, DateTime dataDevolucao)
         {
             this.Locacoes.Add(new Locacao(
                 cliente,
-                veiculo));
+                veiculo,
+                dataDevolucao));
             Console.WriteLine("\nLocação realizada com sucesso!");
         }
 

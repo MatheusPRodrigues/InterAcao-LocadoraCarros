@@ -289,7 +289,10 @@ void RealizarLocacao(Locadora locadora)
         return;
     }
 
-    locadora.RealizarLocacao(cliente, veiculo);
+    Console.WriteLine("Digite uma data para devolução do veículo:");
+    DateTime dataDevolucao = DateTime.Parse(Console.ReadLine());
+
+    locadora.RealizarLocacao(cliente, veiculo, dataDevolucao);
     PressioneEnterParaContinuar();
 }
 

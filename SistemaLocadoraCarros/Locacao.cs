@@ -10,42 +10,53 @@ namespace SistemaLocadoraCarros
     {
         public int Id { get; private set; }
         public DateTime DataLocacao { get; set; }
+        public DateTime DataDevolucao { get; set; }
         public Pessoa Cliente { get; set; }
         public Veiculo VeiculoLocado { get; set; }
         public double ValorLocacao { get; set; }
 
-        private static int contador = 0;
+        private static int contadorId = 1;
 
-        public Locacao(Pessoa cliente, Veiculo veiculoLocado)
+        public Locacao(Pessoa cliente, Veiculo veiculoLocado, DateTime dataDevolucao)
         {
-            this.Id = contador++;
-            this.DataLocacao = DateTime.Now;
+            this.Id = contadorId++;
+            DateTime dataLocacao = DateTime.Now;
+            this.DataLocacao = dataLocacao;
             this.Cliente = cliente;
             this.VeiculoLocado = veiculoLocado;
-            this.ValorLocacao = DefinirValorLocacao(cliente, veiculoLocado.ValorVeiculo);
+            this.DataDevolucao = dataDevolucao;
+            this.ValorLocacao = DefinirValorLocacao(cliente, veiculoLocado.ValorVeiculo, dataLocacao, dataDevolucao);
         }
 
-        private double DefinirValorLocacao(Pessoa cliente, double valorVeiculo)
+        private double DefinirValorLocacao(Pessoa cliente, double valorVeiculo, 
+            DateTime dataLocacao, DateTime dataDevolucao)
         {
             const double ADICIONALPESSOAFISICA = 0.1;
             const double ADICIONALPESSOAJURIDICA = 0.15;
 
             if (cliente is PessoaJuridica)
-                return valorVeiculo + (valorVeiculo * ADICIONALPESSOAJURIDICA);
+                return (valorVeiculo + (valorVeiculo * ADICIONALPESSOAJURIDICA)) * DiasDeLocacao(dataLocacao, dataDevolucao);
             else
-                return valorVeiculo + (valorVeiculo * ADICIONALPESSOAFISICA);
+                return (valorVeiculo + (valorVeiculo * ADICIONALPESSOAFISICA)) * DiasDeLocacao(dataLocacao, dataDevolucao);
+        }
+
+        private int DiasDeLocacao(DateTime dataLocacao, DateTime dataDevolucao)
+        {
+            TimeSpan tempoEntreDatas = dataDevolucao.Date - dataLocacao.Date;
+            return tempoEntreDatas.Days;
         }
 
         public override string ToString()
         {
             return $"Id da locação: {this.Id}\n" +
                 $"Data de locação: {this.DataLocacao}\n" +
-                $"===================================\n" +
+                $"Data de devolução: {this.DataDevolucao}\n" +
+                $"================ VEÍCULO ================\n" +
                 $"{VeiculoLocado.ExibirInformacoes()}" +
-                $"===================================\n" +
+                $"================ CLIENTE ================\n" +
                 $"{Cliente.ToString()}" +
-                $"===================================\n" +
-                $"Valor da locação: {this.ValorLocacao}\n";
+                $"============== VALOR LOCACÃO ==============\n" +
+                $"Valor da locação (total): {this.ValorLocacao:C}\n";
         }
     }
 }

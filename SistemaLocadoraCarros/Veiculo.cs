@@ -26,7 +26,7 @@ namespace SistemaLocadoraCarros
             return $"Marca: {this.Marca}\n" +
                 $"Cor: {this.Cor}\n" +
                 $"Ano: {this.Ano}\n" +
-                $"Preço: {this.ValorVeiculo:C}\n";
+                $"Valor diária: {this.ValorVeiculo:C}\n";
         }
     }
 }
